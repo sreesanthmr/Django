@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/b1519738a2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+
+    <div class="container-fluid text-center">
+        <img src="{% static 'images/logo.jpg' %}" height="150px" width="150px">
+    </div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">My Shop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'shop:allcat' %}">Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            All categories
+          </a>
+          <ul class="dropdown-menu">
+              {% for i in links %}
+            <li><a class="dropdown-item" href="{% url 'shop:allprod' i.name %}">{{i.name}}</a></li>
+              {% endfor %}
+          </ul>
+        </li>
+
+          {% if user.is_authenticated %}
+
+          <li class="nav-item">
+          <a class="nav-link active" href="{% url 'shop:logout' %}">Logout</a>
+        </li>
+          {% if user.is_superuser == False %}
+
+           <li class="nav-item">
+          <a class="nav-link active" href="{% url 'cart:cartview' %}"><i class="fa-solid fa-cart-shopping"><sub>{{count}}</sub></i></a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link active" href="{% url 'cart:orderview' %}">Your Orders</a>
+        </li>
+          {% endif %}
+          {% else %}
+          <li class="nav-item">
+          <a class="nav-link active" href="{% url 'shop:register' %}">Register</a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link active" href="{% url 'shop:login' %}">Login</a>
+        </li>
+          {% endif %}
+
+      </ul>
+        <form class="d-flex" role="search" method="POST" action="{% url 'search:search' %}">
+            {% csrf_token %}
+        <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+{% block content %}
+{% endblock %}
+<footer>
+    <div class="footer">
+        <p>&#169; My shop pvt ltd.All Rights Reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
+
+

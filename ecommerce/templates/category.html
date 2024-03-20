@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <img src="{% static 'images/banner2.jpeg' %}" height="500px" width="100%">
+</div>
+<div class="container-fluid mt-3" style="margin-bottom:100px">
+    <h2 class="fw-bold" style="text-align:center ">Our Collections</h2>
+    <p style="text-align:justify;line-height:2 ">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</div>
+
+<div class="container-fluid mt=3" style="margin-bottom:100px">
+    <div class="row">
+        {% for i in c %}
+        <div class="col-sm- 4">
+        <div class="card text-center" style="width: 28rem;">
+            <img src="{{i.image.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{i.name}}</h5>
+                <a href="{% url 'shop:allprod' i.name %}" class="btn btn-primary" >Products</a>
+            </div>
+        </div>
+
+        </div>
+         {% endfor %}
+    </div>
+</div>
+{% endblock %}
